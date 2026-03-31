@@ -9,14 +9,17 @@ data_types = [
     "passes",
     "shotStats",
     "goalStats",
+    "winningShotComp",
     "powerplayPenaltykillStats",
     "penaltyStats",
     "gameTime",
     "skatingStats",
     "advancedStats",
+    "basicStatsGk",
+    "winningShotCompGk"   
 ]
 
-tournament = "playoffs"
+tournament = "runkosarja"
 season = "2025"
 
 dates_file = f"data/raw/schedule_dates/{tournament}_{season}_dates.txt"
