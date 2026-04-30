@@ -3,7 +3,7 @@ import time
 import json
 from pathlib import Path
 
-tournament = "playoffs"
+tournament = "runkosarja"
 season = 2025
 
 game_ids_file = f"data/raw/game_ids/{tournament}_{season}_game_ids.txt"
@@ -18,14 +18,14 @@ base_urls = {
 }
 
 with open(game_ids_file) as f:
-    game_ids = [line.strip() for line in f]
+    game_ids = [int(line.strip()) for line in f]
 
 for gid in game_ids:
     game_data = {
         "game_id": gid,
-        "season": season,       # ← lisätty
-        "date": None,
+        "season": season,
         "tournament": tournament,
+        "game_date": None,
         "data": {}
     }
 
@@ -41,9 +41,9 @@ for gid in game_ids:
         if key == "game":
             try:
                 start = response_json["game"]["start"]
-                game_data["date"] = start[:10]
+                game_data["game_date"] = start[:10]
             except KeyError:
-                game_data["date"] = None
+                game_data["game_date"] = None
 
         time.sleep(2)
 

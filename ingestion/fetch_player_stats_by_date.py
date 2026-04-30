@@ -34,8 +34,9 @@ with open(dates_file) as f:
 
 for d in dates:
     day_data = {
-        "date": d,
+        "season": int(season),
         "tournament": tournament,
+        "game_date": d,
         "data": {}
     }
 
