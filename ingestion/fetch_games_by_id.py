@@ -2,6 +2,7 @@ import requests
 import time
 import json
 from pathlib import Path
+from datetime import datetime, timezone
 
 tournament = "runkosarja"
 season = 2025
@@ -26,6 +27,7 @@ for gid in game_ids:
         "season": season,
         "tournament": tournament,
         "game_date": None,
+        "fetched_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "data": {}
     }
 

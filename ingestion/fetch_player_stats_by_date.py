@@ -2,6 +2,7 @@ import requests
 import time
 import json
 from pathlib import Path
+from datetime import datetime, timezone
 
 data_types = [
     "basicStats",
@@ -19,7 +20,7 @@ data_types = [
     "winningShotCompGk"   
 ]
 
-tournament = "runkosarja"
+tournament = "playoffs"
 season = "2025"
 
 dates_file = f"data/raw/schedule_dates/{tournament}_{season}_dates.txt"
@@ -37,6 +38,7 @@ for d in dates:
         "season": int(season),
         "tournament": tournament,
         "game_date": d,
+        "fetched_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "data": {}
     }
 
