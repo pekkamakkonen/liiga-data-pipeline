@@ -49,10 +49,26 @@ for d in dates:
             "dataType": dt
         }
 
-        r = requests.get(base_url, params=params)
-        r.raise_for_status()
+        max_retries = 3
 
-        day_data["data"][dt] = r.json()
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(base_url, params=params)
+                r.raise_for_status()
+
+                response_json = r.json()
+                break
+
+            except requests.exceptions.RequestException as e:
+                print(f"Attempt {attempt + 1} failed")
+                print(e)
+
+                time.sleep(10)
+
+        else:
+            raise Exception(f"Failed after {max_retries} attempts")
+
+        day_data["data"][dt] = response_json
 
         print(f"Fetched {dt} for {d}")
 
