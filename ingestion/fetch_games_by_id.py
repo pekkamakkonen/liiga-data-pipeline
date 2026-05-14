@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 tournament = "runkosarja"
-season = 2025
+season = 2026
 
 game_ids_file = f"data/raw/game_ids/{tournament}_{season}_game_ids.txt"
 
@@ -34,9 +34,24 @@ for gid in game_ids:
     for key, base in base_urls.items():
         url = f"{base}/{season}/{gid}"
 
-        r = requests.get(url)
-        r.raise_for_status()
-        response_json = r.json()
+        max_retries = 3
+
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(url)
+                r.raise_for_status()
+
+                response_json = r.json()
+                break
+
+            except requests.exceptions.RequestException as e:
+                print(f"Attempt {attempt + 1} failed for {url}")
+                print(e)
+
+                time.sleep(10)
+
+        else:
+            raise Exception(f"Failed after {max_retries} attempts: {url}")
 
         game_data["data"][key] = response_json
 

@@ -16,8 +16,8 @@ data_types = [
     "attendance"
 ]
 
-tournament = "playoffs"
-season = "2025"
+tournament = "runkosarja"
+season = "2026"
 
 dates_file = f"data/raw/schedule_dates/{tournament}_{season}_dates.txt"
 
